@@ -1,7 +1,9 @@
 package com.osidigital.ktm;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class KtmApplication {
@@ -10,4 +12,8 @@ public class KtmApplication {
 		SpringApplication.run(KtmApplication.class, args);
 	}
 
+	@Bean
+	public ModelMapper getModelMapper() {
+		return new ModelMapper();
+	}
 }

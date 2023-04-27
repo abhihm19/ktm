@@ -11,6 +11,8 @@ import com.osidigital.ktm.payload.LoginRequest;
 import com.osidigital.ktm.payload.SignUpRequest;
 import com.osidigital.ktm.service.IAuthService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value="/api/v1/")
 public class AuthController {
@@ -22,7 +24,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("login")
-	public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
 		String token = authService.login(loginRequest);
 		
 		JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
@@ -30,8 +32,16 @@ public class AuthController {
 		return ResponseEntity.ok().body(jwtAuthResponse);
 	}
 	
-	@PostMapping("signup")
-    public ResponseEntity<String> createUser(@RequestBody SignUpRequest signUpRequest) {
+	@PostMapping("/admin/signup")
+    public ResponseEntity<String> createAdminUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+		signUpRequest.setRole("ROLE_ADMIN");
+		String output = authService.createUser(signUpRequest);
+    	return ResponseEntity.ok().body(output);	
+	}
+	
+	@PostMapping("/user/signup")
+    public ResponseEntity<String> createUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+		signUpRequest.setRole("ROLE_STANDARD_USER");
 		String output = authService.createUser(signUpRequest);
     	return ResponseEntity.ok().body(output);	
 	}

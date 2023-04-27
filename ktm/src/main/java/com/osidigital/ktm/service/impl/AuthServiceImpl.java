@@ -62,7 +62,7 @@ public class AuthServiceImpl implements IAuthService{
 	user.setPassword(signUpRequest.getPassword());
 	user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));		
 	user.setRole(roleRepository.findByName(signUpRequest.getRole())
-			.orElseThrow(() -> new RuntimeException("Role not found")));
+			.orElseThrow(() -> new APIException(HttpStatus.BAD_REQUEST,"Role not found")));
 	userRepository.save(user);
 	
 	return "User successfully created";	

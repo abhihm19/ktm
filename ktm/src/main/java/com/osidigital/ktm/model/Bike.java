@@ -1,5 +1,7 @@
 package com.osidigital.ktm.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +38,12 @@ public class Bike {
 	private double tankCapacity;
 	
 	private boolean status;
+	
+	private String createdBy;
+	private Date createdDate;
+	private String lastModifiedBy;
+	private Date lastModifiedDate;
+	private int version;
 	
 	
 }
